@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/27 16:01:11 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:30:15 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->time_to_eat = ft_atoi(argv[3]);
 		parameters->time_to_sleep = ft_atoi(argv[4]);
 		parameters->number_of_forks = parameters->number_of_philosophers;
+		parameters->philo = NULL;
 		if (argc == 6)
 		{
 			parameters->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
@@ -60,4 +61,48 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 	{
 		return (1);
 	}
+}
+
+t_philo	*find_last_philo(t_philo *philo)
+{
+	t_philo	*current;
+
+	if (!philo)
+		return (NULL);
+	current = philo;
+	while (current->next)
+		current = current->next;
+	return (current);
+}
+
+void	connect_philosopher(t_philo **philo, t_philo *new_philo)
+{
+	t_philo	*last_philo;
+
+	if (*philo == NULL)
+	{
+		*philo = new_philo;
+		return ;
+	}
+	last_philo = find_last_philo(*philo);
+	last_philo->next = new_philo;
+}
+
+t_philo	*init_philosophers(t_parameters *parameters, int position)
+{
+	t_philo	*philosopher;
+
+	philosopher = malloc(sizeof(*philosopher));
+	if (philosopher == NULL)
+	{
+		printf("The philosopher can't seat\n");
+		return (NULL);
+	}
+	philosopher->position = position + 1;
+	philosopher->meal_ate = 0;
+	philosopher->left_fork_available = TRUE;
+	philosopher->right_fork_available = TRUE;
+	philosopher->parameters = parameters;
+	printf("je suis assis en position %d\n", philosopher->position);
+	return (philosopher);
 }

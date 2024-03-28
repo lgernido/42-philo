@@ -6,32 +6,11 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/28 12:31:48 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:34:03 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*daily_routine(void *arg)
-{
-	t_philo	*philosopher;
-	int		position;
-
-	position = *(int *)arg;
-	philosopher = malloc(sizeof(t_philo));
-	if (philosopher == NULL)
-	{
-		printf("Failed to allocate philosophers\n");
-		return (NULL);
-	}
-	philosopher->position = position;
-	philosopher->meal_ate = 0;
-	printf("Je suis philosophe\nMa position est %d\nJ'ai mange %d repas\n\n",
-		philosopher->position, philosopher->meal_ate);
-	free(philosopher);
-	free(arg);
-	return (NULL);
-}
 
 void	create_threads(int number_of_philo, int threads_created,
 		pthread_t *thread)

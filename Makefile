@@ -4,7 +4,7 @@
 SRC_FOLDER	= srcs/
 SRC_FOLDER_BONUS = srcs/bonus/
 
-SRC_FILES	= main.c init.c threads.c utils.c
+SRC_FILES	= main.c init.c threads.c routine.c utils.c
 
 SRC_FILES_BONUS = 
 BUILD = build/
