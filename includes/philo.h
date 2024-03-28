@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/27 15:42:17 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:10:36 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ int					check_digits(char **argv);
 
 // threads.c
 void				init_threads(t_parameters *parameters);
+void				create_threads(int number_of_philo, int threads_created,
+						pthread_t *thread);
+void				join_threads(int threads_executed, int threads_created,
+						pthread_t *thread);
 void				*daily_routine(void *arg);
 
 // utils.c
