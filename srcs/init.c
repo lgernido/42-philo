@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/29 09:09:44 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:11:02 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		}
 		else
 		{
-			parameters->number_of_times_each_philosophers_must_eat = INT_MAX;
+			(void)parameters->number_of_times_each_philosophers_must_eat;
 		}
 		return (0);
 	}

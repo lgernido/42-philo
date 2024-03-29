@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/29 08:48:29 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:35:51 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_philo
 {
 	int					position;
 	int					meal_ate;
-	t_bool				left_fork_available;
-	t_bool				right_fork_available;
+	pthread_mutex_t		left_fork_available;
+	pthread_mutex_t		right_fork_available;
 	pthread_t			philo;
 	struct s_philo		*next;
 	struct s_philo		*prev;
