@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/28 15:30:15 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/29 08:30:35 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_philo	*find_last_philo(t_philo *philo)
 	if (!philo)
 		return (NULL);
 	current = philo;
-	while (current->next)
+	while (current->next != philo)
 		current = current->next;
 	return (current);
 }
@@ -82,10 +82,15 @@ void	connect_philosopher(t_philo **philo, t_philo *new_philo)
 	if (*philo == NULL)
 	{
 		*philo = new_philo;
+		(*philo)->next = new_philo;
+		(*philo)->prev = new_philo;
 		return ;
 	}
 	last_philo = find_last_philo(*philo);
 	last_philo->next = new_philo;
+	new_philo->prev = last_philo;
+	new_philo->next = *philo;
+	(*philo)->prev = new_philo;
 }
 
 t_philo	*init_philosophers(t_parameters *parameters, int position)
@@ -103,6 +108,8 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->left_fork_available = TRUE;
 	philosopher->right_fork_available = TRUE;
 	philosopher->parameters = parameters;
+	philosopher->next = NULL;
+	philosopher->prev = NULL;
 	printf("je suis assis en position %d\n", philosopher->position);
 	return (philosopher);
 }

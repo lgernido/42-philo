@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/28 15:31:23 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/29 08:34:14 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	syntax_guide(void)
 int	main(int argc, char **argv)
 {
 	t_parameters	*parameters;
-	t_philo			*list;
 	int				philo_seated;
 
 	philo_seated = 0;
@@ -40,12 +39,6 @@ int	main(int argc, char **argv)
 			connect_philosopher(&parameters->philo,
 				init_philosophers(parameters, philo_seated));
 			philo_seated++;
-		}
-		list = parameters->philo;
-		while (list != NULL)
-		{
-			printf("je suis assis a la place %d\n", list->position);
-			list = list->next;
 		}
 		// init_threads(parameters);
 		free(parameters);
