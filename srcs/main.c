@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/29 08:34:14 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:06:28 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	main(int argc, char **argv)
 				init_philosophers(parameters, philo_seated));
 			philo_seated++;
 		}
-		// init_threads(parameters);
+		init_threads(parameters);
+		clear_philo_list(&parameters->philo);
 		free(parameters);
 		return (0);
 	}

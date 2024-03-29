@@ -6,33 +6,28 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/28 12:34:03 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:06:13 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	create_threads(int number_of_philo, int threads_created,
+void	create_threads(t_parameters *parameters, int threads_created,
 		pthread_t *thread)
 {
-	int	*safe_value;
+	t_philo	*current;
 
-	while (threads_created < number_of_philo)
+	current = parameters->philo;
+	while (threads_created < parameters->number_of_philosophers)
 	{
-		safe_value = (int *)malloc(sizeof(int));
-		if (safe_value == NULL)
-		{
-			printf("Failed to allocate threads\n");
-			return ;
-		}
-		*safe_value = threads_created + 1;
 		if (pthread_create(&thread[threads_created], NULL, &daily_routine,
-				(void *)safe_value) != 0)
+				(void *)current) != 0)
 		{
 			printf("Failed to create threads\n");
 			return ;
 		}
 		printf("thread %d has started\n", threads_created + 1);
+		current = current->next;
 		threads_created++;
 	}
 }
@@ -66,7 +61,7 @@ void	init_threads(t_parameters *parameters)
 		return ;
 	}
 	threads_created = 0;
-	create_threads(parameters->number_of_philosophers, threads_created, thread);
+	create_threads(parameters, threads_created, thread);
 	threads_executed = 0;
 	join_threads(threads_executed, parameters->number_of_philosophers, thread);
 	free(thread);

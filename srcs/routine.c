@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
+/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/28 18:42:23 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/03/29 09:09:09 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	*daily_routine(void *arg)
 {
-	(void)arg;
-	printf("Je suis philosophe\n");
-	// free(arg);
+	t_philo	*philosopher;
+
+	philosopher = (t_philo *)arg;
+	printf("Je suis philosophe %d\n", philosopher->position);
 	return (NULL);
 }

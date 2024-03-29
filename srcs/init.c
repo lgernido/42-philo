@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/29 08:30:35 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:09:44 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,6 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 	}
 }
 
-t_philo	*find_last_philo(t_philo *philo)
-{
-	t_philo	*current;
-
-	if (!philo)
-		return (NULL);
-	current = philo;
-	while (current->next != philo)
-		current = current->next;
-	return (current);
-}
-
 void	connect_philosopher(t_philo **philo, t_philo *new_philo)
 {
 	t_philo	*last_philo;
@@ -110,6 +98,5 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->parameters = parameters;
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
-	printf("je suis assis en position %d\n", philosopher->position);
 	return (philosopher);
 }
