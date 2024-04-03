@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 12:01:52 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:58:07 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	are_you_dead(t_parameters *data, t_philo *philo)
 		|| ((data->simulation_start.tv_usec
 				- philo->last_meal_time.tv_usec) > data->time_to_die))
 	{
+		data->someone_is_dead = TRUE;
 		printf("%ld %d died\n", data->current_time.tv_usec, philo->position);
 		return (1);
 	}
@@ -77,7 +78,8 @@ void	*daily_routine(void *arg)
 	while (1)
 	{
 		if (go_sleep(data, philosopher) == 1 || go_eat(data, philosopher) == 1
-			|| go_think(data, philosopher) == 1)
+			|| go_think(data, philosopher) == 1
+			|| data->someone_is_dead == TRUE)
 		{
 			*return_value = 1;
 			break ;

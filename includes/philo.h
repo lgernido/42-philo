@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 11:32:24 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:56:07 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_parameters
 	struct s_philo		*philo;
 	struct timeval		current_time;
 	struct timeval		simulation_start;
+	t_bool				someone_is_dead;
 }						t_parameters;
 
 typedef struct s_philo
@@ -76,11 +77,13 @@ void					connect_philosopher(t_philo **philo,
 							t_philo *new_philo);
 
 // threads.c
-void					init_threads(t_parameters *parameters);
+int						init_threads(t_parameters *parameters);
+int						thread_driver(t_parameters *parameters,
+							int *return_value, pthread_t *thread);
+int						join_threads(int threads_executed, int threads_created,
+							pthread_t *thread, int *return_value);
 void					create_threads(t_parameters *parameters,
 							int threads_created, pthread_t *thread);
-void					join_threads(int threads_executed, int threads_created,
-							pthread_t *thread, int *return_value);
 
 // routine.c
 void					*daily_routine(void *arg);

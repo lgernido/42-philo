@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 11:38:13 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:49:26 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,56 @@ void	create_threads(t_parameters *parameters, int threads_created,
 	create_monitor(parameters);
 }
 
-void	join_threads(int threads_executed, int threads_created,
-		pthread_t *thread, int *return_value)
+int	join_threads(int threads_executed, int threads_created, pthread_t *thread,
+		int *return_value)
 {
 	while (threads_executed < threads_created)
 	{
 		if (pthread_join(thread[threads_executed], (void **)&return_value) != 0)
 		{
 			printf("Failed to join threads\n");
-			return ;
+			return (1);
 		}
 		printf("thread %d is over\n", threads_executed + 1);
 		threads_executed++;
 	}
+	if (*return_value == 1)
+		return (1);
+	else
+		return (0);
+}
+int	thread_driver(t_parameters *parameters, int *return_value,
+		pthread_t *thread)
+{
+	int	threads_created;
+	int	threads_executed;
+
+	pthread_mutex_init(&parameters->philo->left_fork_available, NULL);
+	pthread_mutex_init(&parameters->philo->right_fork_available, NULL);
+	threads_created = 0;
+	create_threads(parameters, threads_created, thread);
+	threads_executed = 0;
+	if (join_threads(threads_executed, parameters->number_of_philosophers,
+			thread, return_value) == 1)
+	{
+		free(return_value);
+		free(thread);
+		pthread_mutex_destroy(&parameters->philo->left_fork_available);
+		pthread_mutex_destroy(&parameters->philo->right_fork_available);
+		return (1);
+	}
+	else
+	{
+		free(return_value);
+		free(thread);
+		pthread_mutex_destroy(&parameters->philo->left_fork_available);
+		pthread_mutex_destroy(&parameters->philo->right_fork_available);
+		return (0);
+	}
 }
 
-void	init_threads(t_parameters *parameters)
+int	init_threads(t_parameters *parameters)
 {
-	int			threads_created;
-	int			threads_executed;
 	int			*return_value;
 	pthread_t	*thread;
 
@@ -61,18 +92,10 @@ void	init_threads(t_parameters *parameters)
 	if (thread == NULL)
 	{
 		printf("Failed to allocate threads\n");
-		return ;
+		return (1);
 	}
-	threads_created = 0;
-	pthread_mutex_init(&parameters->philo->left_fork_available, NULL);
-	pthread_mutex_init(&parameters->philo->right_fork_available, NULL);
-	// gettimeofday(&parameters->simulation_start, NULL);
-	create_threads(parameters, threads_created, thread);
-	threads_executed = 0;
-	join_threads(threads_executed, parameters->number_of_philosophers, thread,
-		return_value);
-	pthread_mutex_destroy(&parameters->philo->left_fork_available);
-	pthread_mutex_destroy(&parameters->philo->right_fork_available);
-	free(return_value);
-	free(thread);
+	if (thread_driver(parameters, return_value, thread) == 1)
+		return (1);
+	else
+		return (0);
 }

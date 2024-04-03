@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 12:17:24 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:56:31 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->time_to_sleep = ft_atoi(argv[4]);
 		parameters->number_of_forks = parameters->number_of_philosophers;
 		parameters->philo = NULL;
+		parameters->someone_is_dead = FALSE;
 		gettimeofday(&parameters->simulation_start, NULL);
 		if (argc == 6)
 		{
