@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 10:23:39 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 11:32:24 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ void					init_threads(t_parameters *parameters);
 void					create_threads(t_parameters *parameters,
 							int threads_created, pthread_t *thread);
 void					join_threads(int threads_executed, int threads_created,
-							pthread_t *thread);
+							pthread_t *thread, int *return_value);
 
 // routine.c
 void					*daily_routine(void *arg);
 int						are_you_dead(t_parameters *data, t_philo *philo);
-void					go_sleep(t_parameters *data, t_philo *philosopher);
-void					go_eat(t_parameters *data, t_philo *philosopher);
-void					go_think(t_parameters *data, t_philo *philosopher);
+int						go_sleep(t_parameters *data, t_philo *philosopher);
+int						go_eat(t_parameters *data, t_philo *philosopher);
+int						go_think(t_parameters *data, t_philo *philosopher);
 
 // monitor.c
 void					create_monitor(t_parameters *parameters);

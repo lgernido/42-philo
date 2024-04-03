@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 08:44:58 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:17:24 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->time_to_sleep = ft_atoi(argv[4]);
 		parameters->number_of_forks = parameters->number_of_philosophers;
 		parameters->philo = NULL;
+		gettimeofday(&parameters->simulation_start, NULL);
 		if (argc == 6)
 		{
 			parameters->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
@@ -93,10 +94,9 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	}
 	philosopher->position = position + 1;
 	philosopher->meal_ate = 0;
-	// philosopher->left_fork_available = TRUE;
-	// philosopher->right_fork_available = TRUE;
 	philosopher->parameters = parameters;
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
+	philosopher->last_meal_time.tv_usec = 0;
 	return (philosopher);
 }
