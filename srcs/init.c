@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 14:10:34 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:06:24 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		gettimeofday(&parameters->simulation_start, NULL);
 		if (argc == 6)
 		{
-			parameters->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
+			parameters->number_of_times_philosopher_must_eat = ft_atoi(argv[5]);
 		}
 		else
 		{
-			(void)parameters->number_of_times_each_philosophers_must_eat;
+			(void)parameters->number_of_times_philosopher_must_eat;
 		}
 		return (0);
 	}

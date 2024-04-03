@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:29:17 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/29 08:43:04 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:03:55 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_atoi(const char *nptr)
 		return (0);
 	return (nb);
 }
+
 t_philo	*find_last_philo(t_philo *philo)
 {
 	t_philo	*current;
@@ -70,6 +71,7 @@ t_philo	*find_last_philo(t_philo *philo)
 		current = current->next;
 	return (current);
 }
+
 void	clear_philo_list(t_philo **philo)
 {
 	t_philo	*current;

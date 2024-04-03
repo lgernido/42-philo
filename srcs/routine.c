@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 13:56:35 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:05:25 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	are_you_dead(t_parameters *data, t_philo *philo)
 	}
 	return (0);
 }
+
 int	go_sleep(t_parameters *data, t_philo *philosopher)
 {
 	gettimeofday(&data->current_time, NULL);
@@ -48,6 +49,7 @@ int	go_eat(t_parameters *data, t_philo *philosopher)
 		return (1);
 	return (0);
 }
+
 int	go_think(t_parameters *data, t_philo *philosopher)
 {
 	gettimeofday(&data->current_time, NULL);
@@ -57,6 +59,7 @@ int	go_think(t_parameters *data, t_philo *philosopher)
 		return (1);
 	return (0);
 }
+
 void	*daily_routine(void *arg)
 {
 	t_philo			*philosopher;
@@ -68,7 +71,7 @@ void	*daily_routine(void *arg)
 	{
 		printf("Malloc error\n");
 		*return_value = 1;
-		return (void *)(return_value);
+		return ((void *)(return_value));
 	}
 	*return_value = 0;
 	philosopher = (t_philo *)arg;
@@ -83,5 +86,5 @@ void	*daily_routine(void *arg)
 			break ;
 		}
 	}
-	return (void *)(return_value);
+	return ((void *)(return_value));
 }

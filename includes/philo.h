@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 14:02:55 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:06:35 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_parameters
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-	int					number_of_times_each_philosophers_must_eat;
+	int					number_of_times_philosopher_must_eat;
 	int					number_of_forks;
 	struct s_philo		*philo;
 	struct timeval		current_time;

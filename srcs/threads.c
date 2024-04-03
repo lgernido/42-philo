@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 14:02:21 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:04:37 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	join_threads(int threads_executed, int threads_created, pthread_t *thread,
 	else
 		return (0);
 }
+
 int	thread_driver(t_parameters *parameters, int *return_value,
 		pthread_t *thread)
 {
