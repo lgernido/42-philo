@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 12:49:26 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:02:21 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ int	thread_driver(t_parameters *parameters, int *return_value,
 	int	threads_created;
 	int	threads_executed;
 
-	pthread_mutex_init(&parameters->philo->left_fork_available, NULL);
-	pthread_mutex_init(&parameters->philo->right_fork_available, NULL);
+	pthread_mutex_init(&parameters->mutex, NULL);
 	threads_created = 0;
 	create_threads(parameters, threads_created, thread);
 	threads_executed = 0;
@@ -67,16 +66,14 @@ int	thread_driver(t_parameters *parameters, int *return_value,
 	{
 		free(return_value);
 		free(thread);
-		pthread_mutex_destroy(&parameters->philo->left_fork_available);
-		pthread_mutex_destroy(&parameters->philo->right_fork_available);
+		pthread_mutex_destroy(&parameters->mutex);
 		return (1);
 	}
 	else
 	{
 		free(return_value);
 		free(thread);
-		pthread_mutex_destroy(&parameters->philo->left_fork_available);
-		pthread_mutex_destroy(&parameters->philo->right_fork_available);
+		pthread_mutex_destroy(&parameters->mutex);
 		return (0);
 	}
 }
