@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 09:14:02 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:24:26 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	init_threads(t_parameters *parameters)
 	int			threads_executed;
 	pthread_t	*thread;
 
+	pthread_mutex_init(&parameters->philo->left_fork_available, NULL);
+	pthread_mutex_init(&parameters->philo->right_fork_available, NULL);
 	thread = (pthread_t *)malloc(sizeof(*thread)
 			* parameters->number_of_philosophers);
 	if (thread == NULL)
@@ -62,8 +64,11 @@ void	init_threads(t_parameters *parameters)
 		return ;
 	}
 	threads_created = 0;
+	gettimeofday(&parameters->simulation_start, NULL);
 	create_threads(parameters, threads_created, thread);
 	threads_executed = 0;
 	join_threads(threads_executed, parameters->number_of_philosophers, thread);
+	pthread_mutex_destroy(&parameters->philo->left_fork_available);
+	pthread_mutex_destroy(&parameters->philo->right_fork_available);
 	free(thread);
 }

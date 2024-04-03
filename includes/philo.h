@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 09:12:43 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:23:39 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_parameters
 	int					number_of_times_each_philosophers_must_eat;
 	int					number_of_forks;
 	struct s_philo		*philo;
+	struct timeval		current_time;
+	struct timeval		simulation_start;
 }						t_parameters;
 
 typedef struct s_philo
@@ -54,6 +56,7 @@ typedef struct s_philo
 	struct s_philo		*next;
 	struct s_philo		*prev;
 	struct s_parameters	*parameters;
+	struct timeval		last_meal_time;
 }						t_philo;
 
 //==========================================================================//
@@ -81,6 +84,10 @@ void					join_threads(int threads_executed, int threads_created,
 
 // routine.c
 void					*daily_routine(void *arg);
+int						are_you_dead(t_parameters *data, t_philo *philo);
+void					go_sleep(t_parameters *data, t_philo *philosopher);
+void					go_eat(t_parameters *data, t_philo *philosopher);
+void					go_think(t_parameters *data, t_philo *philosopher);
 
 // monitor.c
 void					create_monitor(t_parameters *parameters);
