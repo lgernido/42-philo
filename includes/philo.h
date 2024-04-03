@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/29 12:35:51 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/03 09:12:43 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,10 @@ void					join_threads(int threads_executed, int threads_created,
 
 // routine.c
 void					*daily_routine(void *arg);
+
+// monitor.c
+void					create_monitor(t_parameters *parameters);
+void					*monitor_routine(void *arg);
 
 // utils.c
 int						ft_atoi(const char *nptr);
