@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 09:39:30 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:00:53 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->number_of_forks = parameters->number_of_philosophers;
 		parameters->philo = NULL;
 		parameters->someone_is_dead = 0;
-		gettimeofday(&parameters->simulation_start, NULL);
+		parameters->simulation_start = get_time();
 		if (argc == 6)
 		{
 			parameters->number_of_times_philosopher_must_eat = ft_atoi(argv[5]);
@@ -96,7 +96,7 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->parameters = parameters;
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
-	philosopher->last_meal_time.tv_usec = 0;
+	philosopher->last_meal_time = 0;
 	philosopher->currently_eating = 0;
 	philosopher->dead = 0;
 	pthread_mutex_init(&philosopher->left_fork, NULL);

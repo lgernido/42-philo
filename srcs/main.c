@@ -6,11 +6,32 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 10:42:05 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:28:10 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <sys/time.h>
+
+int	ft_usleep(long milliseconds)
+{
+	long	start;
+
+	start = get_time();
+	while ((get_time() - start) < milliseconds)
+		usleep(500);
+	return (0);
+}
+
+long	get_time(void)
+{
+	struct timeval	current_time;
+	double			time;
+
+	gettimeofday(&current_time, NULL);
+	time = ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+	return (time);
+}
 
 void	clean_everything(t_parameters *parameters)
 {
@@ -47,7 +68,7 @@ int	main(int argc, char **argv)
 				init_philosophers(parameters, philo_seated));
 			philo_seated++;
 		}
-		init_threads(parameters);
+		run_simulation(parameters);
 		return (0);
 	}
 	else

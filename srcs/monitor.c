@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 10:30:30 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:03:38 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 int	reaper_check(t_parameters *data, t_philo *philo)
 {
+	long	current_time;
+
 	pthread_mutex_lock(&philo->meal_lock);
-	if ((((data->current_time.tv_usec
-					- philo->last_meal_time.tv_usec) > data->time_to_die)
-			|| ((data->simulation_start.tv_usec
-					- philo->last_meal_time.tv_usec) > data->time_to_die))
+	current_time = get_time();
+	if ((((current_time - philo->last_meal_time) > data->time_to_die)
+			|| ((data->simulation_start
+					- philo->last_meal_time) > data->time_to_die))
 		&& philo->currently_eating == 0)
 	{
 		data->someone_is_dead = 1;
-		printf("%ld %d died\n", data->current_time.tv_usec, philo->position);
+		printf(RED "%ld %d died\n", (get_time() - data->simulation_start),
+			philo->position);
 		pthread_mutex_unlock(&philo->meal_lock);
 		return (1);
 	}

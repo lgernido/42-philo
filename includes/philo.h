@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 10:44:41 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:18:11 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+//==========================================================================//
+/*COLORS*/
+
+# define NRM "\x1B[0m"
+# define RED "\x1B[31m"
+# define GRN "\x1B[32m"
+# define YEL "\x1B[33m"
+# define BLU "\x1B[34m"
+# define MAG "\x1B[35m"
+# define CYN "\x1B[36m"
+# define WHT "\x1B[37m"
 
 //==========================================================================//
 /*STRUCTURES AND ENUMS*/
@@ -42,8 +54,8 @@ typedef struct s_parameters
 	int					number_of_times_philosopher_must_eat;
 	int					number_of_forks;
 	struct s_philo		*philo;
-	struct timeval		current_time;
-	struct timeval		simulation_start;
+	long				current_time;
+	long				simulation_start;
 	int					someone_is_dead;
 }						t_parameters;
 
@@ -61,7 +73,7 @@ typedef struct s_philo
 	struct s_philo		*next;
 	struct s_philo		*prev;
 	struct s_parameters	*parameters;
-	struct timeval		last_meal_time;
+	long				last_meal_time;
 }						t_philo;
 
 //==========================================================================//
@@ -71,6 +83,8 @@ typedef struct s_philo
 int						main(int argc, char **argv);
 void					syntax_guide(void);
 void					clean_everything(t_parameters *parameters);
+long					get_time(void);
+int						ft_usleep(long milliseconds);
 
 // init.c
 int						init_parameters(int argc, char **argv,
@@ -82,7 +96,7 @@ void					connect_philosopher(t_philo **philo,
 							t_philo *new_philo);
 
 // threads.c
-int						init_threads(t_parameters *parameters);
+int						run_simulation(t_parameters *parameters);
 void					thread_driver(t_parameters *parameters,
 							pthread_t *thread, pthread_t *monitor);
 int						join_threads(int threads_executed, int threads_created,

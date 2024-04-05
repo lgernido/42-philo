@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 10:45:56 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:54:45 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	create_threads(t_parameters *parameters, int threads_created,
 			clean_everything(parameters);
 			return ;
 		}
-		printf("thread %d has started\n", threads_created + 1);
 		current = current->next;
 		threads_created++;
 	}
@@ -55,7 +54,6 @@ int	join_threads(int threads_executed, int threads_created, pthread_t *thread,
 			clean_everything(parameters);
 			return (1);
 		}
-		printf("thread %d is over\n", threads_executed + 1);
 		threads_executed++;
 	}
 	return (0);
@@ -77,7 +75,7 @@ void	thread_driver(t_parameters *parameters, pthread_t *thread,
 	free(thread);
 }
 
-int	init_threads(t_parameters *parameters)
+int	run_simulation(t_parameters *parameters)
 {
 	int			*return_value;
 	pthread_t	*thread;
