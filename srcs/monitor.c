@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 09:44:06 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:54:21 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,32 @@ int	reaper_loop(t_philo *philo)
 	}
 	return (0);
 }
+int	did_you_eat(t_philo *philo, t_parameters *data)
+{
+	int	index;
+	int	done_eating;
+
+	index = 0;
+	done_eating = 0;
+	if (data->number_of_times_philosopher_must_eat == INT_MAX)
+		return (0);
+	while (index < data->number_of_forks)
+	{
+		pthread_mutex_lock(&philo->meal_lock);
+		if (philo->meal_ate >= data->number_of_times_philosopher_must_eat)
+			done_eating++;
+		pthread_mutex_unlock(&philo->meal_lock);
+		philo = philo->next;
+	}
+	if (done_eating == data->number_of_philosophers)
+	{
+		pthread_mutex_lock(&philo->dead_lock);
+		philo->dead = 1;
+		pthread_mutex_unlock(&philo->dead_lock);
+		return (1);
+	}
+	return (0);
+}
 
 void	*monitor_routine(void *arg)
 {
@@ -83,15 +109,4 @@ pthread_t	*create_monitor(t_parameters *parameters)
 		return (NULL);
 	}
 	return (monitor);
-}
-
-void	join_monitor(pthread_t *monitor)
-{
-	if (pthread_join(*monitor, NULL) != 0)
-	{
-		printf("Failed to join monitor\n");
-		return ;
-	}
-	printf("Moniteur termine\n");
-	free(monitor);
 }

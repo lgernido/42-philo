@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 09:38:24 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:54:05 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int						join_threads(int threads_executed, int threads_created,
 							pthread_t *thread, int *return_value);
 void					create_threads(t_parameters *parameters,
 							int threads_created, pthread_t *thread);
+void					join_monitor(pthread_t *monitor);
 
 // routine.c
 void					*daily_routine(void *arg);
@@ -101,7 +102,8 @@ void					go_think(t_parameters *data, t_philo *philosopher);
 int						reaper_check(t_parameters *data, t_philo *philo);
 pthread_t				*create_monitor(t_parameters *parameters);
 void					*monitor_routine(void *arg);
-void					join_monitor(pthread_t *monitor);
+int						reaper_loop(t_philo *philo);
+int						did_you_eat(t_philo *philo, t_parameters *data);
 
 // utils.c
 int						ft_atoi(const char *nptr);

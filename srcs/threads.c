@@ -6,11 +6,22 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 08:54:34 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:48:06 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	join_monitor(pthread_t *monitor)
+{
+	if (pthread_join(*monitor, NULL) != 0)
+	{
+		printf("Failed to join monitor\n");
+		return ;
+	}
+	printf("Moniteur termine\n");
+	free(monitor);
+}
 
 void	create_threads(t_parameters *parameters, int threads_created,
 		pthread_t *thread)
