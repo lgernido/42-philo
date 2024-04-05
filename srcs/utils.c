@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:29:17 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 15:03:55 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:37:04 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ void	clear_philo_list(t_philo **philo)
 	while (current != NULL && current->next != *philo)
 	{
 		next = current->next;
+		pthread_mutex_destroy(&current->left_fork);
+		pthread_mutex_destroy(&current->right_fork);
+		pthread_mutex_destroy(&current->dead_lock);
+		pthread_mutex_destroy(&current->meal_lock);
 		free(current);
 		current = next;
 	}

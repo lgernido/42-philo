@@ -6,20 +6,20 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 09:48:06 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:45:56 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	join_monitor(pthread_t *monitor)
+void	join_monitor(pthread_t *monitor, t_parameters *parameters)
 {
 	if (pthread_join(*monitor, NULL) != 0)
 	{
 		printf("Failed to join monitor\n");
+		clean_everything(parameters);
 		return ;
 	}
-	printf("Moniteur termine\n");
 	free(monitor);
 }
 
@@ -35,6 +35,7 @@ void	create_threads(t_parameters *parameters, int threads_created,
 				(void *)current) != 0)
 		{
 			printf("Failed to create threads\n");
+			clean_everything(parameters);
 			return ;
 		}
 		printf("thread %d has started\n", threads_created + 1);
@@ -44,48 +45,36 @@ void	create_threads(t_parameters *parameters, int threads_created,
 }
 
 int	join_threads(int threads_executed, int threads_created, pthread_t *thread,
-		int *return_value)
+		t_parameters *parameters)
 {
 	while (threads_executed < threads_created)
 	{
-		if (pthread_join(thread[threads_executed], (void **)&return_value) != 0)
+		if (pthread_join(thread[threads_executed], NULL) != 0)
 		{
 			printf("Failed to join threads\n");
+			clean_everything(parameters);
 			return (1);
 		}
 		printf("thread %d is over\n", threads_executed + 1);
 		threads_executed++;
 	}
-	if (*return_value == 1)
-		return (1);
-	else
-		return (0);
+	return (0);
 }
 
-int	thread_driver(t_parameters *parameters, int *return_value,
-		pthread_t *thread, pthread_t *monitor)
+void	thread_driver(t_parameters *parameters, pthread_t *thread,
+		pthread_t *monitor)
 {
 	int	threads_created;
 	int	threads_executed;
 
-	monitor = create_monitor(parameters);
 	threads_created = 0;
 	create_threads(parameters, threads_created, thread);
+	monitor = create_monitor(parameters);
 	threads_executed = 0;
-	if (join_threads(threads_executed, parameters->number_of_philosophers,
-			thread, return_value) == 1)
-	{
-		free(return_value);
-		free(thread);
-		return (1);
-	}
-	else
-	{
-		free(return_value);
-		free(thread);
-		return (0);
-	}
-	join_monitor(monitor);
+	join_threads(threads_executed, parameters->number_of_philosophers, thread,
+		parameters);
+	join_monitor(monitor, parameters);
+	free(thread);
 }
 
 int	init_threads(t_parameters *parameters)
@@ -101,10 +90,9 @@ int	init_threads(t_parameters *parameters)
 	if (thread == NULL)
 	{
 		printf("Failed to allocate threads\n");
+		clean_everything(parameters);
 		return (1);
 	}
-	if (thread_driver(parameters, return_value, thread, monitor) == 1)
-		return (1);
-	else
-		return (0);
+	thread_driver(parameters, thread, monitor);
+	return (0);
 }

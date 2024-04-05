@@ -6,11 +6,18 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 12:50:31 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:42:05 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	clean_everything(t_parameters *parameters)
+{
+	if (parameters->philo)
+		clear_philo_list(&parameters->philo);
+	free(parameters);
+}
 
 void	syntax_guide(void)
 {
@@ -40,11 +47,7 @@ int	main(int argc, char **argv)
 				init_philosophers(parameters, philo_seated));
 			philo_seated++;
 		}
-		if (init_threads(parameters) == 1)
-		{
-			clear_philo_list(&parameters->philo);
-			free(parameters);
-		}
+		init_threads(parameters);
 		return (0);
 	}
 	else

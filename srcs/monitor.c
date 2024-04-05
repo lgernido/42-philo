@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 09:54:21 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:30:30 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ void	*monitor_routine(void *arg)
 	data = (t_parameters *)arg;
 	while (1)
 	{
-		if (reaper_loop(data->philo) == 1)
+		if (reaper_loop(data->philo) == 1 || did_you_eat(data->philo,
+				data) == 1)
 			break ;
 	}
-	return (0);
+	return (arg);
 }
 
 pthread_t	*create_monitor(t_parameters *parameters)

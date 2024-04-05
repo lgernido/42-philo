@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 09:54:05 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:44:41 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_philo
 // main.c
 int						main(int argc, char **argv);
 void					syntax_guide(void);
+void					clean_everything(t_parameters *parameters);
 
 // init.c
 int						init_parameters(int argc, char **argv,
@@ -82,14 +83,14 @@ void					connect_philosopher(t_philo **philo,
 
 // threads.c
 int						init_threads(t_parameters *parameters);
-int						thread_driver(t_parameters *parameters,
-							int *return_value, pthread_t *thread,
-							pthread_t *monitor);
+void					thread_driver(t_parameters *parameters,
+							pthread_t *thread, pthread_t *monitor);
 int						join_threads(int threads_executed, int threads_created,
-							pthread_t *thread, int *return_value);
+							pthread_t *thread, t_parameters *parameters);
 void					create_threads(t_parameters *parameters,
 							int threads_created, pthread_t *thread);
-void					join_monitor(pthread_t *monitor);
+void					join_monitor(pthread_t *monitor,
+							t_parameters *parameters);
 
 // routine.c
 void					*daily_routine(void *arg);

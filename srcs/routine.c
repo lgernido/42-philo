@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 09:42:40 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:47:01 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	go_eat(t_parameters *data, t_philo *philosopher)
 			return ;
 		}
 		gettimeofday(&data->current_time, NULL);
-		printf("%ld %d had taken a fork", data->current_time.tv_usec,
+		printf("%ld %d has taken a fork\n", data->current_time.tv_usec,
 			philosopher->position);
 		pthread_mutex_lock(&philosopher->left_fork);
 		gettimeofday(&data->current_time, NULL);
-		printf("%ld %d had taken a fork", data->current_time.tv_usec,
+		printf("%ld %d has taken a fork\n", data->current_time.tv_usec,
 			philosopher->position);
 		philosopher->currently_eating = 1;
 		gettimeofday(&philosopher->last_meal_time, NULL);
@@ -69,16 +69,7 @@ void	*daily_routine(void *arg)
 {
 	t_philo			*philosopher;
 	t_parameters	*data;
-	int				*return_value;
 
-	return_value = (int *)malloc(sizeof(int));
-	if (return_value == NULL)
-	{
-		printf("Malloc error\n");
-		*return_value = 1;
-		return ((void *)(return_value));
-	}
-	*return_value = 0;
 	philosopher = (t_philo *)arg;
 	data = philosopher->parameters;
 	while (!are_you_dead(philosopher))
@@ -87,7 +78,5 @@ void	*daily_routine(void *arg)
 		go_think(data, philosopher);
 		go_sleep(data, philosopher);
 	}
-	if (data->someone_is_dead == 1)
-		*return_value = 1;
-	return ((void *)(return_value));
+	return (arg);
 }
