@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 15:06:24 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:39:30 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->time_to_sleep = ft_atoi(argv[4]);
 		parameters->number_of_forks = parameters->number_of_philosophers;
 		parameters->philo = NULL;
-		parameters->someone_is_dead = FALSE;
+		parameters->someone_is_dead = 0;
 		gettimeofday(&parameters->simulation_start, NULL);
 		if (argc == 6)
 		{
@@ -60,9 +60,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		return (0);
 	}
 	else
-	{
 		return (1);
-	}
 }
 
 void	connect_philosopher(t_philo **philo, t_philo *new_philo)
@@ -99,5 +97,11 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
 	philosopher->last_meal_time.tv_usec = 0;
+	philosopher->currently_eating = 0;
+	philosopher->dead = 0;
+	pthread_mutex_init(&philosopher->left_fork, NULL);
+	pthread_mutex_init(&philosopher->right_fork, NULL);
+	pthread_mutex_init(&philosopher->dead_lock, NULL);
+	pthread_mutex_init(&philosopher->meal_lock, NULL);
 	return (philosopher);
 }

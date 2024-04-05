@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 15:04:37 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:54:34 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	create_threads(t_parameters *parameters, int threads_created,
 		current = current->next;
 		threads_created++;
 	}
-	create_monitor(parameters);
 }
 
 int	join_threads(int threads_executed, int threads_created, pthread_t *thread,
@@ -53,12 +52,12 @@ int	join_threads(int threads_executed, int threads_created, pthread_t *thread,
 }
 
 int	thread_driver(t_parameters *parameters, int *return_value,
-		pthread_t *thread)
+		pthread_t *thread, pthread_t *monitor)
 {
 	int	threads_created;
 	int	threads_executed;
 
-	pthread_mutex_init(&parameters->mutex, NULL);
+	monitor = create_monitor(parameters);
 	threads_created = 0;
 	create_threads(parameters, threads_created, thread);
 	threads_executed = 0;
@@ -67,24 +66,25 @@ int	thread_driver(t_parameters *parameters, int *return_value,
 	{
 		free(return_value);
 		free(thread);
-		pthread_mutex_destroy(&parameters->mutex);
 		return (1);
 	}
 	else
 	{
 		free(return_value);
 		free(thread);
-		pthread_mutex_destroy(&parameters->mutex);
 		return (0);
 	}
+	join_monitor(monitor);
 }
 
 int	init_threads(t_parameters *parameters)
 {
 	int			*return_value;
 	pthread_t	*thread;
+	pthread_t	*monitor;
 
 	return_value = NULL;
+	monitor = NULL;
 	thread = (pthread_t *)malloc(sizeof(*thread)
 			* parameters->number_of_philosophers);
 	if (thread == NULL)
@@ -92,7 +92,7 @@ int	init_threads(t_parameters *parameters)
 		printf("Failed to allocate threads\n");
 		return (1);
 	}
-	if (thread_driver(parameters, return_value, thread) == 1)
+	if (thread_driver(parameters, return_value, thread, monitor) == 1)
 		return (1);
 	else
 		return (0);

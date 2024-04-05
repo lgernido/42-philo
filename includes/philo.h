@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/03 15:06:35 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:38:24 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,20 @@ typedef struct s_parameters
 	struct s_philo		*philo;
 	struct timeval		current_time;
 	struct timeval		simulation_start;
-	t_bool				someone_is_dead;
-	pthread_mutex_t		mutex;
+	int					someone_is_dead;
 }						t_parameters;
 
 typedef struct s_philo
 {
+	pthread_t			philo;
 	int					position;
 	int					meal_ate;
-	t_bool				left_fork_available;
-	t_bool				right_fork_available;
-	pthread_t			philo;
+	int					currently_eating;
+	int					dead;
+	pthread_mutex_t		left_fork;
+	pthread_mutex_t		right_fork;
+	pthread_mutex_t		dead_lock;
+	pthread_mutex_t		meal_lock;
 	struct s_philo		*next;
 	struct s_philo		*prev;
 	struct s_parameters	*parameters;
@@ -80,7 +83,8 @@ void					connect_philosopher(t_philo **philo,
 // threads.c
 int						init_threads(t_parameters *parameters);
 int						thread_driver(t_parameters *parameters,
-							int *return_value, pthread_t *thread);
+							int *return_value, pthread_t *thread,
+							pthread_t *monitor);
 int						join_threads(int threads_executed, int threads_created,
 							pthread_t *thread, int *return_value);
 void					create_threads(t_parameters *parameters,
@@ -88,14 +92,16 @@ void					create_threads(t_parameters *parameters,
 
 // routine.c
 void					*daily_routine(void *arg);
-int						are_you_dead(t_parameters *data, t_philo *philo);
-int						go_sleep(t_parameters *data, t_philo *philosopher);
-int						go_eat(t_parameters *data, t_philo *philosopher);
-int						go_think(t_parameters *data, t_philo *philosopher);
+int						are_you_dead(t_philo *philo);
+void					go_sleep(t_parameters *data, t_philo *philosopher);
+void					go_eat(t_parameters *data, t_philo *philosopher);
+void					go_think(t_parameters *data, t_philo *philosopher);
 
 // monitor.c
-void					create_monitor(t_parameters *parameters);
+int						reaper_check(t_parameters *data, t_philo *philo);
+pthread_t				*create_monitor(t_parameters *parameters);
 void					*monitor_routine(void *arg);
+void					join_monitor(pthread_t *monitor);
 
 // utils.c
 int						ft_atoi(const char *nptr);
