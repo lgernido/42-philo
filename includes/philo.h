@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/06 10:30:11 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:37:33 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ void					display_message(char *str, t_philo *philo,
 
 // monitor.c
 int						reaper_check(t_parameters *data, t_philo *philo);
-pthread_t				*create_monitor(t_parameters *parameters);
 void					*monitor_routine(void *arg);
 int						reaper_loop(t_philo *philo);
 int						did_you_eat(t_philo *philo, t_parameters *data);

@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/06 10:39:16 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:37:23 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,3 @@ void	*monitor_routine(void *arg)
 	return (arg);
 }
 
-pthread_t	*create_monitor(t_parameters *parameters)
-{
-	pthread_t	*monitor;
-
-	monitor = (pthread_t *)malloc(sizeof(*monitor));
-	if (monitor == NULL)
-	{
-		printf("Failed to allocate monitor thread\n");
-		return (NULL);
-	}
-	if (pthread_create(monitor, NULL, &monitor_routine, parameters) != 0)
-	{
-		printf("Failed to create monitor thread\n");
-		return (NULL);
-	}
-	return (monitor);
-}
