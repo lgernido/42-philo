@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 14:18:11 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:30:11 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_parameters
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					number_of_times_philosopher_must_eat;
-	int					number_of_forks;
 	struct s_philo		*philo;
 	long				current_time;
 	long				simulation_start;
@@ -70,6 +69,7 @@ typedef struct s_philo
 	pthread_mutex_t		right_fork;
 	pthread_mutex_t		dead_lock;
 	pthread_mutex_t		meal_lock;
+	pthread_mutex_t		print_lock;
 	struct s_philo		*next;
 	struct s_philo		*prev;
 	struct s_parameters	*parameters;
@@ -112,6 +112,8 @@ int						are_you_dead(t_philo *philo);
 void					go_sleep(t_parameters *data, t_philo *philosopher);
 void					go_eat(t_parameters *data, t_philo *philosopher);
 void					go_think(t_parameters *data, t_philo *philosopher);
+void					display_message(char *str, t_philo *philo,
+							t_parameters *data);
 
 // monitor.c
 int						reaper_check(t_parameters *data, t_philo *philo);

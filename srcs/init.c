@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 14:00:53 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/06 09:43:49 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->time_to_die = ft_atoi(argv[2]);
 		parameters->time_to_eat = ft_atoi(argv[3]);
 		parameters->time_to_sleep = ft_atoi(argv[4]);
-		parameters->number_of_forks = parameters->number_of_philosophers;
 		parameters->philo = NULL;
 		parameters->someone_is_dead = 0;
 		parameters->simulation_start = get_time();
@@ -103,5 +102,6 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	pthread_mutex_init(&philosopher->right_fork, NULL);
 	pthread_mutex_init(&philosopher->dead_lock, NULL);
 	pthread_mutex_init(&philosopher->meal_lock, NULL);
+	pthread_mutex_init(&philosopher->print_lock, NULL);
 	return (philosopher);
 }

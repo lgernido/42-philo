@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 14:03:38 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:39:16 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@ int	reaper_check(t_parameters *data, t_philo *philo)
 
 	pthread_mutex_lock(&philo->meal_lock);
 	current_time = get_time();
-	if ((((current_time - philo->last_meal_time) > data->time_to_die)
+	if ((((current_time - philo->last_meal_time) >= data->time_to_die)
 			|| ((data->simulation_start
-					- philo->last_meal_time) > data->time_to_die))
+					- philo->last_meal_time) >= data->time_to_die))
 		&& philo->currently_eating == 0)
 	{
-		data->someone_is_dead = 1;
-		printf(RED "%ld %d died\n", (get_time() - data->simulation_start),
-			philo->position);
 		pthread_mutex_unlock(&philo->meal_lock);
 		return (1);
 	}
@@ -47,6 +44,7 @@ int	reaper_loop(t_philo *philo)
 	{
 		if (reaper_check(data, philo))
 		{
+			display_message("has died", philo, data);
 			pthread_mutex_lock(&philo->dead_lock);
 			philo->dead = 1;
 			pthread_mutex_unlock(&philo->dead_lock);
@@ -65,7 +63,7 @@ int	did_you_eat(t_philo *philo, t_parameters *data)
 	done_eating = 0;
 	if (data->number_of_times_philosopher_must_eat == INT_MAX)
 		return (0);
-	while (index < data->number_of_forks)
+	while (index < data->number_of_philosophers)
 	{
 		pthread_mutex_lock(&philo->meal_lock);
 		if (philo->meal_ate >= data->number_of_times_philosopher_must_eat)

@@ -6,19 +6,26 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/05 14:17:53 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:09:02 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	display_message(char *str, t_philo *philo, t_parameters *data)
+{
+	pthread_mutex_lock(&philo->print_lock);
+	printf("%ld %d %s\n", (get_time() - data->simulation_start),
+		philo->position, str);
+	pthread_mutex_unlock(&philo->print_lock);
+}
+
 int	are_you_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->dead_lock);
-	if (philo->parameters->someone_is_dead == 1)
+	if (philo->dead == 1)
 	{
-		pthread_mutex_unlock(&philo->dead_lock);
-		return (1);
+		return (pthread_mutex_unlock(&philo->dead_lock), 1);
 	}
 	pthread_mutex_unlock(&philo->dead_lock);
 	return (0);
@@ -26,31 +33,29 @@ int	are_you_dead(t_philo *philo)
 
 void	go_sleep(t_parameters *data, t_philo *philosopher)
 {
-	printf(BLU "%ld %d is sleeping\n", (get_time() - data->simulation_start),
-		philosopher->position);
+	display_message("is sleeping", philosopher, data);
 	ft_usleep(data->time_to_sleep);
 }
 
 void	go_eat(t_parameters *data, t_philo *philosopher)
 {
 	pthread_mutex_lock(&philosopher->right_fork);
+	display_message("has taken a fork", philosopher, data);
 	if (data->number_of_philosophers == 1)
 	{
-		usleep(data->time_to_die);
+		ft_usleep(data->time_to_die);
 		pthread_mutex_unlock(&philosopher->right_fork);
 		return ;
 	}
-	printf(CYN "%ld %d has taken a fork\n", (get_time()
-			- data->simulation_start), philosopher->position);
 	pthread_mutex_lock(&philosopher->left_fork);
-	printf(CYN "%ld %d has taken a fork\n", (get_time()
-			- data->simulation_start), philosopher->position);
+	display_message("has taken a fork", philosopher, data);
 	philosopher->currently_eating = 1;
-	philosopher->last_meal_time = (get_time() - data->simulation_start);
-	printf(MAG "%ld %d is eating\n", philosopher->last_meal_time,
-		philosopher->position);
-	ft_usleep(data->time_to_eat);
+	display_message("is eating", philosopher, data);
+	pthread_mutex_lock(&philosopher->meal_lock);
+	philosopher->last_meal_time = get_time();
 	philosopher->meal_ate++;
+	pthread_mutex_unlock(&philosopher->meal_lock);
+	ft_usleep(data->time_to_eat);
 	philosopher->currently_eating = 0;
 	pthread_mutex_unlock(&philosopher->left_fork);
 	pthread_mutex_unlock(&philosopher->right_fork);
@@ -58,8 +63,7 @@ void	go_eat(t_parameters *data, t_philo *philosopher)
 
 void	go_think(t_parameters *data, t_philo *philosopher)
 {
-	printf(GRN "%ld %d is thinking\n", (get_time() - data->simulation_start),
-		philosopher->position);
+	display_message("is thinking", philosopher, data);
 }
 
 void	*daily_routine(void *arg)
@@ -69,6 +73,8 @@ void	*daily_routine(void *arg)
 
 	philosopher = (t_philo *)arg;
 	data = philosopher->parameters;
+	if (philosopher->position % 2 == 0)
+		ft_usleep(1);
 	while (!are_you_dead(philosopher))
 	{
 		go_eat(data, philosopher);
