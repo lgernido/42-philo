@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/03/29 12:11:02 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:05:46 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	}
 	philosopher->position = position + 1;
 	philosopher->meal_ate = 0;
-	philosopher->left_fork_available = TRUE;
-	philosopher->right_fork_available = TRUE;
 	philosopher->parameters = parameters;
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
