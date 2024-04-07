@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 14:38:30 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 16:53:09 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		}
 		else
 		{
-			(void)parameters->number_of_times_philosopher_must_eat;
+			parameters->number_of_times_philosopher_must_eat = -1;
 		}
 		return (0);
 	}

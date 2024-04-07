@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 14:21:49 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 16:55:02 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	reaper_loop(t_philo *philo)
 		{
 			display_message("has died", &philo[index], data);
 			pthread_mutex_lock(philo[0].dead_lock);
-			// data->someone_is_dead = 1;
 			*philo->dead = 1;
 			pthread_mutex_unlock(philo[0].dead_lock);
 			return (1);
@@ -60,7 +59,7 @@ int	did_you_eat(t_philo *philo, t_parameters *data)
 
 	index = 0;
 	done_eating = 0;
-	if (data->number_of_times_philosopher_must_eat == INT_MAX)
+	if (data->number_of_times_philosopher_must_eat == -1)
 		return (0);
 	while (index < data->number_of_philosophers)
 	{
