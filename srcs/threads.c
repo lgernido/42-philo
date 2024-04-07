@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/06 12:39:00 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:23:11 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	thread_driver(t_parameters *parameters, pthread_t *thread,
 	threads_created = 0;
 	create_threads(parameters, threads_created, thread);
 	threads_executed = 0;
-	join_monitor(monitor, parameters);
 	join_threads(threads_executed, parameters->number_of_philosophers, thread,
 		parameters);
+	join_monitor(monitor, parameters);
 	free(monitor);
 	free(thread);
 }

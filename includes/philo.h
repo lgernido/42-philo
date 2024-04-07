@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/06 12:37:33 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/07 14:38:27 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ typedef struct s_parameters
 	long				current_time;
 	long				simulation_start;
 	int					someone_is_dead;
+	pthread_mutex_t		dead_lock;
+	pthread_mutex_t		meal_lock;
+	pthread_mutex_t		print_lock;
 }						t_parameters;
 
 typedef struct s_philo
@@ -64,12 +67,12 @@ typedef struct s_philo
 	int					position;
 	int					meal_ate;
 	int					currently_eating;
-	int					dead;
+	int					*dead;
 	pthread_mutex_t		left_fork;
 	pthread_mutex_t		right_fork;
-	pthread_mutex_t		dead_lock;
-	pthread_mutex_t		meal_lock;
-	pthread_mutex_t		print_lock;
+	pthread_mutex_t		*dead_lock;
+	pthread_mutex_t		*meal_lock;
+	pthread_mutex_t		*print_lock;
 	struct s_philo		*next;
 	struct s_philo		*prev;
 	struct s_parameters	*parameters;

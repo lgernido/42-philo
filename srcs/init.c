@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 13:06:55 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 14:38:30 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->philo = NULL;
 		parameters->someone_is_dead = 0;
 		parameters->simulation_start = get_time();
+		pthread_mutex_init(&parameters->dead_lock, NULL);
+		pthread_mutex_init(&parameters->meal_lock, NULL);
+		pthread_mutex_init(&parameters->print_lock, NULL);
 		if (argc == 6)
 		{
 			parameters->number_of_times_philosopher_must_eat = ft_atoi(argv[5]);
@@ -97,11 +100,11 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->prev = NULL;
 	philosopher->last_meal_time = 0;
 	philosopher->currently_eating = 0;
-	philosopher->dead = 0;
 	pthread_mutex_init(&philosopher->left_fork, NULL);
 	pthread_mutex_init(&philosopher->right_fork, NULL);
-	pthread_mutex_init(&philosopher->dead_lock, NULL);
-	pthread_mutex_init(&philosopher->meal_lock, NULL);
-	pthread_mutex_init(&philosopher->print_lock, NULL);
+	philosopher->dead = &parameters->someone_is_dead;
+	philosopher->dead_lock = &parameters->dead_lock;
+	philosopher->print_lock = &parameters->print_lock;
+	philosopher->meal_lock = &parameters->meal_lock;
 	return (philosopher);
 }
