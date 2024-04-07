@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 14:39:14 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 16:45:58 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	display_message(char *str, t_philo *philo, t_parameters *data)
 
 	pthread_mutex_lock(philo->print_lock);
 	current_time = get_time() - data->simulation_start;
-	printf("%ld %d %s\n", current_time, philo->position, str);
+	if (!are_you_dead(philo))
+		printf("%ld %d %s\n", current_time, philo->position, str);
 	pthread_mutex_unlock(philo->print_lock);
 }
 

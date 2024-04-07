@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 14:36:52 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 16:42:59 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ long	get_time(void)
 
 void	clean_everything(t_parameters *parameters)
 {
+	(void)parameters;
 	if (parameters->philo)
 		clear_philo_list(&parameters->philo);
 	free(parameters);

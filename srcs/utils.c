@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:29:17 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 14:41:10 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 16:39:44 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,18 @@ void	clear_philo_list(t_philo **philo)
 	t_philo	*current;
 	t_philo	*next;
 
-	if (*philo == NULL)
-		return ;
 	current = *philo;
-	while (current != NULL && current->next != *philo)
+	while (current != NULL)
 	{
 		next = current->next;
 		pthread_mutex_destroy(&current->left_fork);
 		pthread_mutex_destroy(&current->right_fork);
-		pthread_mutex_destroy(current->dead_lock);
-		pthread_mutex_destroy(current->meal_lock);
-		pthread_mutex_destroy(current->print_lock);
 		free(current);
 		current = next;
+		if (current == *philo)
+		{
+			break ;
+		}
 	}
-	free(current);
 	*philo = NULL;
 }

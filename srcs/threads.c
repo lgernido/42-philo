@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 13:23:11 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 16:44:32 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	thread_driver(t_parameters *parameters, pthread_t *thread,
 	join_threads(threads_executed, parameters->number_of_philosophers, thread,
 		parameters);
 	join_monitor(monitor, parameters);
-	free(monitor);
+	// free(monitor);
 	free(thread);
 }
 
