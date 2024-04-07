@@ -6,7 +6,7 @@
 /*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 13:05:46 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/07 13:06:55 by luciegernid      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,21 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		parameters->time_to_die = ft_atoi(argv[2]);
 		parameters->time_to_eat = ft_atoi(argv[3]);
 		parameters->time_to_sleep = ft_atoi(argv[4]);
-		parameters->number_of_forks = parameters->number_of_philosophers;
 		parameters->philo = NULL;
+		parameters->someone_is_dead = 0;
+		parameters->simulation_start = get_time();
 		if (argc == 6)
 		{
-			parameters->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
+			parameters->number_of_times_philosopher_must_eat = ft_atoi(argv[5]);
 		}
 		else
 		{
-			(void)parameters->number_of_times_each_philosophers_must_eat;
+			(void)parameters->number_of_times_philosopher_must_eat;
 		}
 		return (0);
 	}
 	else
-	{
 		return (1);
-	}
 }
 
 void	connect_philosopher(t_philo **philo, t_philo *new_philo)
@@ -96,5 +95,13 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->parameters = parameters;
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
+	philosopher->last_meal_time = 0;
+	philosopher->currently_eating = 0;
+	philosopher->dead = 0;
+	pthread_mutex_init(&philosopher->left_fork, NULL);
+	pthread_mutex_init(&philosopher->right_fork, NULL);
+	pthread_mutex_init(&philosopher->dead_lock, NULL);
+	pthread_mutex_init(&philosopher->meal_lock, NULL);
+	pthread_mutex_init(&philosopher->print_lock, NULL);
 	return (philosopher);
 }
