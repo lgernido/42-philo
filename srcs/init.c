@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 12:21:17 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:03:57 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,24 @@ int	init_parameters(int argc, char **argv, t_parameters *parameters)
 		return (1);
 }
 
+void	connect_philosopher(t_philo **philo, t_philo *new_philo)
+{
+	t_philo	*last_philo;
+
+	if (*philo == NULL)
+	{
+		*philo = new_philo;
+		(*philo)->next = new_philo;
+		(*philo)->prev = new_philo;
+		return ;
+	}
+	last_philo = find_last_philo(*philo);
+	last_philo->next = new_philo;
+	new_philo->prev = last_philo;
+	new_philo->next = *philo;
+	(*philo)->prev = new_philo;
+}
+
 t_philo	*init_philosophers(t_parameters *parameters, int position)
 {
 	t_philo	*philosopher;
@@ -78,10 +96,12 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->position = position + 1;
 	philosopher->meal_ate = 0;
 	philosopher->parameters = parameters;
+	philosopher->next = NULL;
+	philosopher->prev = NULL;
 	philosopher->currently_eating = 0;
 	pthread_mutex_init(&philosopher->left_fork, NULL);
 	pthread_mutex_init(&philosopher->right_fork, NULL);
-	philosopher->last_meal_time = 0;
+	philosopher->last_meal_time = get_time();
 	philosopher->dead = &parameters->someone_is_dead;
 	philosopher->dead_lock = &parameters->dead_lock;
 	philosopher->print_lock = &parameters->print_lock;
