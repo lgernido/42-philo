@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 12:23:21 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:29:11 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	go_eat(t_parameters *data, t_philo *philosopher)
 	philosopher->currently_eating = 1;
 	display_message("is eating", philosopher, data);
 	pthread_mutex_lock(philosopher->meal_lock);
-	philosopher->last_meal_time = get_time();
+	philosopher->last_meal_time = 0;
 	philosopher->meal_ate++;
 	pthread_mutex_unlock(philosopher->meal_lock);
 	ft_usleep(data->time_to_eat);
