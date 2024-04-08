@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 09:37:47 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:12:17 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	clean_everything(t_parameters *parameters)
 {
 	(void)parameters;
 	if (parameters->philo)
-		clear_philo_list(&parameters->philo);
+		clear_philo_list(&parameters->philo,
+			parameters->number_of_philosophers);
 	free(parameters);
 }
 
@@ -65,8 +66,7 @@ int	main(int argc, char **argv)
 	{
 		while (philo_seated < parameters->number_of_philosophers)
 		{
-			connect_philosopher(&parameters->philo,
-				init_philosophers(parameters, philo_seated));
+			init_philosophers(parameters, philo_seated);
 			philo_seated++;
 		}
 		run_simulation(parameters);

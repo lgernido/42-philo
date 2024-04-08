@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 10:49:14 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:16:24 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	reaper_loop(t_philo *philo)
 	int				index;
 	t_parameters	*data;
 
-	data = philo->parameters;
+	data = philo[0].parameters;
 	index = 0;
 	while (index < data->number_of_philosophers)
 	{

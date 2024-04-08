@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
+/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:29:17 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 16:39:44 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/08 12:19:56 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,35 +60,18 @@ int	ft_atoi(const char *nptr)
 	return (nb);
 }
 
-t_philo	*find_last_philo(t_philo *philo)
+void	clear_philo_list(t_philo **philo, int philo_seated)
 {
-	t_philo	*current;
+	int	philo_up;
 
-	if (!philo)
-		return (NULL);
-	current = philo;
-	while (current->next != philo)
-		current = current->next;
-	return (current);
-}
-
-void	clear_philo_list(t_philo **philo)
-{
-	t_philo	*current;
-	t_philo	*next;
-
-	current = *philo;
-	while (current != NULL)
+	philo_up = 0;
+	if (philo == NULL)
+		return ;
+	while (philo_up < philo_seated)
 	{
-		next = current->next;
-		pthread_mutex_destroy(&current->left_fork);
-		pthread_mutex_destroy(&current->right_fork);
-		free(current);
-		current = next;
-		if (current == *philo)
-		{
-			break ;
-		}
+		pthread_mutex_destroy(&philo[philo_up]->left_fork);
+		pthread_mutex_destroy(&philo[philo_up]->right_fork);
+		free(philo[philo_up]);
 	}
 	*philo = NULL;
 }

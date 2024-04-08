@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 08:53:06 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:11:49 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ typedef struct s_philo
 	pthread_mutex_t		*dead_lock;
 	pthread_mutex_t		*meal_lock;
 	pthread_mutex_t		*print_lock;
-	struct s_philo		*next;
-	struct s_philo		*prev;
 	struct s_parameters	*parameters;
 	long				last_meal_time;
 }						t_philo;
@@ -95,8 +93,6 @@ int						init_parameters(int argc, char **argv,
 int						check_digits(char **argv);
 t_philo					*init_philosophers(t_parameters *parameters,
 							int position);
-void					connect_philosopher(t_philo **philo,
-							t_philo *new_philo);
 
 // threads.c
 int						run_simulation(t_parameters *parameters);
@@ -127,7 +123,6 @@ int						did_you_eat(t_philo *philo, t_parameters *data);
 // utils.c
 int						ft_atoi(const char *nptr);
 int						ft_isdigit(int c);
-t_philo					*find_last_philo(t_philo *philo);
-void					clear_philo_list(t_philo **philo);
+void					clear_philo_list(t_philo **philo, int philo_seated);
 
 #endif
