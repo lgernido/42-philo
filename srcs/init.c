@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
+/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 16:53:09 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/08 10:18:56 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->parameters = parameters;
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
-	philosopher->last_meal_time = 0;
 	philosopher->currently_eating = 0;
 	pthread_mutex_init(&philosopher->left_fork, NULL);
 	pthread_mutex_init(&philosopher->right_fork, NULL);
+	philosopher->last_meal_time = get_time();
 	philosopher->dead = &parameters->someone_is_dead;
 	philosopher->dead_lock = &parameters->dead_lock;
 	philosopher->print_lock = &parameters->print_lock;

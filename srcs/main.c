@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
+/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 16:42:59 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/08 09:37:47 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,18 @@ int	ft_usleep(long milliseconds)
 
 	start = get_time();
 	while ((get_time() - start) < milliseconds)
-		usleep(500);
+		usleep(50);
 	return (0);
 }
 
 long	get_time(void)
 {
 	struct timeval	current_time;
-	double			time;
+	long			time;
 
-	gettimeofday(&current_time, NULL);
-	time = ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+	if (gettimeofday(&current_time, NULL) == -1)
+		printf("Clock error\n");
+	time = (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 	return (time);
 }
 

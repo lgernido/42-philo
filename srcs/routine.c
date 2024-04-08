@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
+/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 16:45:58 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/08 10:46:34 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	display_message(char *str, t_philo *philo, t_parameters *data)
-{
-	long	current_time;
-
-	pthread_mutex_lock(philo->print_lock);
-	current_time = get_time() - data->simulation_start;
-	if (!are_you_dead(philo))
-		printf("%ld %d %s\n", current_time, philo->position, str);
-	pthread_mutex_unlock(philo->print_lock);
-}
 
 int	are_you_dead(t_philo *philo)
 {

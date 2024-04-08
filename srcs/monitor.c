@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
+/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 16:55:02 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/08 10:49:14 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	display_message(char *str, t_philo *philo, t_parameters *data)
+{
+	long	current_time;
+
+	pthread_mutex_lock(philo->print_lock);
+	current_time = get_time() - data->simulation_start;
+	if (!are_you_dead(philo))
+		printf("%ld %d %s\n", current_time, philo->position, str);
+	pthread_mutex_unlock(philo->print_lock);
+}
 
 int	reaper_check(t_parameters *data, t_philo *philo)
 {
@@ -40,7 +51,7 @@ int	reaper_loop(t_philo *philo)
 	index = 0;
 	while (index < data->number_of_philosophers)
 	{
-		if (reaper_check(data, &philo[index]))
+		if (reaper_check(data, &philo[index]) == 1)
 		{
 			display_message("has died", &philo[index], data);
 			pthread_mutex_lock(philo[0].dead_lock);
@@ -52,6 +63,7 @@ int	reaper_loop(t_philo *philo)
 	}
 	return (0);
 }
+
 int	did_you_eat(t_philo *philo, t_parameters *data)
 {
 	int	index;
@@ -86,19 +98,9 @@ void	*monitor_routine(void *arg)
 	data = (t_parameters *)arg;
 	while (1)
 	{
-		pthread_mutex_lock(data->philo->dead_lock);
-		if (*data->philo->dead == 1)
-		{
-			printf("A philosopher has died. Stopping simulation.\n");
-			pthread_mutex_unlock(data->philo->dead_lock);
-			break ;
-		}
-		pthread_mutex_unlock(data->philo->dead_lock);
-		printf("Monitoring philosopher state...\n");
 		if (reaper_loop(data->philo) == 1 || did_you_eat(data->philo,
 				data) == 1)
 		{
-			printf("Simulation should stop.\n");
 			break ;
 		}
 		usleep(1000);

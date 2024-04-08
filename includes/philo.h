@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciegernidos <luciegernidos@student.42    +#+  +:+       +#+        */
+/*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/07 14:38:27 by luciegernid      ###   ########.fr       */
+/*   Updated: 2024/04/08 08:53:06 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ int						are_you_dead(t_philo *philo);
 void					go_sleep(t_parameters *data, t_philo *philosopher);
 void					go_eat(t_parameters *data, t_philo *philosopher);
 void					go_think(t_parameters *data, t_philo *philosopher);
-void					display_message(char *str, t_philo *philo,
-							t_parameters *data);
 
 // monitor.c
+void					display_message(char *str, t_philo *philo,
+							t_parameters *data);
 int						reaper_check(t_parameters *data, t_philo *philo);
 void					*monitor_routine(void *arg);
 int						reaper_loop(t_philo *philo);
