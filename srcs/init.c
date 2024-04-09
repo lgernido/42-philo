@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 09:09:32 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:06:42 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ t_philo	*init_philosophers(t_parameters *parameters, int position)
 	philosopher->next = NULL;
 	philosopher->prev = NULL;
 	philosopher->currently_eating = 0;
-	pthread_mutex_init(&philosopher->left_fork, NULL);
-	pthread_mutex_init(&philosopher->right_fork, NULL);
+	pthread_mutex_init(&philosopher->my_fork, NULL);
 	philosopher->dead = &parameters->someone_is_dead;
 	philosopher->last_meal_time = get_time();
 	return (philosopher);

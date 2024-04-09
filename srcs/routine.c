@@ -6,20 +6,20 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 09:42:27 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:39:10 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	are_you_dead(t_philo *philo)
+int	are_you_dead(t_parameters *data)
 {
-	pthread_mutex_lock(&philo->parameters->dead_lock);
-	if (*philo->dead == 1)
+	pthread_mutex_lock(&data->dead_lock);
+	if (data->someone_is_dead == 1)
 	{
-		return (pthread_mutex_unlock(&philo->parameters->dead_lock), 1);
+		return (pthread_mutex_unlock(&data->dead_lock), 1);
 	}
-	pthread_mutex_unlock(&philo->parameters->dead_lock);
+	pthread_mutex_unlock(&data->dead_lock);
 	return (0);
 }
 
@@ -29,18 +29,34 @@ void	go_sleep(t_parameters *data, t_philo *philosopher)
 	ft_usleep(data->time_to_sleep);
 }
 
+void grab_forks(t_parameters *data)
+
 void	go_eat(t_parameters *data, t_philo *philosopher)
 {
-	pthread_mutex_lock(&philosopher->right_fork);
-	display_message("has taken a fork", philosopher, data);
+	// pthread_mutex_lock(&philosopher->my_fork);
 	if (data->number_of_philosophers == 1)
 	{
+		pthread_mutex_lock(&philosopher->my_fork);
 		ft_usleep(data->time_to_die);
-		pthread_mutex_unlock(&philosopher->right_fork);
+		pthread_mutex_unlock(&philosopher->my_fork);
 		return ;
 	}
-	pthread_mutex_lock(&philosopher->left_fork);
-	display_message("has taken a fork", philosopher, data);
+	if (philosopher->position % 2 == 0)
+	{
+		pthread_mutex_lock(&philosopher->prev->my_fork);
+		display_message("has taken a fork", philosopher, data);
+		pthread_mutex_lock(&philosopher->my_fork);
+		display_message("has taken a fork", philosopher, data);
+	}
+	else
+	{
+		pthread_mutex_lock(&philosopher->my_fork);
+		display_message("has taken a fork", philosopher, data);
+		pthread_mutex_lock(&philosopher->prev->my_fork);
+		display_message("has taken a fork", philosopher, data);
+	}
+	// pthread_mutex_lock(&philosopher->prev->my_fork);
+	// display_message("has taken a fork", philosopher, data);
 	pthread_mutex_lock(&data->meal_lock);
 	philosopher->currently_eating = 1;
 	display_message("is eating", philosopher, data);
@@ -51,8 +67,8 @@ void	go_eat(t_parameters *data, t_philo *philosopher)
 	pthread_mutex_lock(&data->meal_lock);
 	philosopher->currently_eating = 0;
 	pthread_mutex_unlock(&data->meal_lock);
-	pthread_mutex_unlock(&philosopher->left_fork);
-	pthread_mutex_unlock(&philosopher->right_fork);
+	pthread_mutex_unlock(&philosopher->my_fork);
+	pthread_mutex_unlock(&philosopher->prev->my_fork);
 }
 
 void	go_think(t_parameters *data, t_philo *philosopher)
@@ -69,7 +85,7 @@ void	*daily_routine(void *arg)
 	data = philosopher->parameters;
 	if (philosopher->position % 2 == 0)
 		ft_usleep(1);
-	while (!are_you_dead(philosopher))
+	while (!are_you_dead(data))
 	{
 		go_eat(data, philosopher);
 		go_sleep(data, philosopher);

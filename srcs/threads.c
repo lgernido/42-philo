@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 09:15:55 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:20:21 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,18 @@ void	create_threads(t_parameters *parameters, int threads_created,
 {
 	t_philo	*current;
 
+	(void)thread;
 	current = parameters->philo;
 	while (threads_created < parameters->number_of_philosophers)
 	{
-		if (pthread_create(&thread[threads_created], NULL, &daily_routine,
+		if (pthread_create(&current->philo, NULL, &daily_routine,
 				(void *)current) != 0)
 		{
 			printf("Failed to create threads\n");
 			clean_everything(parameters);
 			return ;
 		}
+		current = current->next;
 		threads_created++;
 	}
 }
@@ -44,15 +46,20 @@ void	create_threads(t_parameters *parameters, int threads_created,
 int	join_threads(int threads_executed, int threads_created, pthread_t *thread,
 		t_parameters *parameters)
 {
+	t_philo	*current;
+
+	(void)thread;
+	current = parameters->philo;
 	while (threads_executed < threads_created)
 	{
-		if (pthread_join(thread[threads_executed], NULL) != 0)
+		if (pthread_join(current->philo, NULL) != 0)
 		{
 			printf("Failed to join threads\n");
 			clean_everything(parameters);
 			return (1);
 		}
 		threads_executed++;
+		current = current->next;
 	}
 	return (0);
 }

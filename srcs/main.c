@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 09:34:20 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 10:46:06 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	syntax_guide(void)
 	printf("./philo [number_of_philosphers] [time_to_die] [time_to_eat] ");
 	printf("[time_to_sleep] (number_of_times_each_philosophers_must_eat)\n\n");
 	printf("All the time arguments are in milliseconds\n");
+	printf("All time arguments must be positive\n");
 	printf("Last argument is optionnal\n");
 	printf("-----------------------------------------------------------------");
 	printf("-----------------------------------------------------------\n");

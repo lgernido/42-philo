@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 09:19:47 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:01:35 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	display_message(char *str, t_philo *philo, t_parameters *data)
 
 	pthread_mutex_lock(&data->print_lock);
 	current_time = get_time() - data->simulation_start;
-	if (!are_you_dead(philo))
+	if (!are_you_dead(data))
 		printf("%ld %d %s\n", current_time, philo->position, str);
 	pthread_mutex_unlock(&data->print_lock);
 }
@@ -77,7 +77,7 @@ int	did_you_eat(t_philo *philo, t_parameters *data)
 	while (index < data->number_of_philosophers)
 	{
 		pthread_mutex_lock(&data->meal_lock);
-		if (philo[index].meal_ate >= data->number_of_times_philosopher_must_eat)
+		if (philo->meal_ate >= data->number_of_times_philosopher_must_eat)
 			done_eating++;
 		pthread_mutex_unlock(&data->meal_lock);
 		philo = philo->next;
@@ -105,7 +105,7 @@ void	*monitor_routine(void *arg)
 		{
 			break ;
 		}
-		usleep(1000);
+		usleep(500);
 	}
 	return (NULL);
 }
