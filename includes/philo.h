@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 14:56:53 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:30:55 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_philo					*init_philosophers(t_parameters *parameters,
 							int position);
 void					connect_philosopher(t_philo **philo,
 							t_philo *new_philo);
+int						check_input(t_parameters *parameters);
 
 // threads.c
 int						run_simulation(t_parameters *parameters);
@@ -106,7 +107,7 @@ void					join_monitor(pthread_t *monitor,
 							t_parameters *parameters);
 
 // routine.c
-void					grab_fork(t_parameters *parameters,
+void					grab_forks(t_parameters *parameters,
 							t_philo *philosopher);
 void					*daily_routine(void *arg);
 void					go_sleep(t_parameters *data, t_philo *philosopher);

@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 14:56:20 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:42:13 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	grab_forks(t_parameters *data, t_philo *philosopher)
 
 void	go_eat(t_parameters *data, t_philo *philosopher)
 {
+	if (data->time_to_die < data->time_to_sleep)
+		go_think(data, philosopher);
 	if (data->number_of_philosophers == 1)
 	{
 		pthread_mutex_lock(&philosopher->my_fork);
