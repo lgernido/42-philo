@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 11:06:30 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:56:53 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,9 @@ void					join_monitor(pthread_t *monitor,
 							t_parameters *parameters);
 
 // routine.c
+void					grab_fork(t_parameters *parameters,
+							t_philo *philosopher);
 void					*daily_routine(void *arg);
-int						are_you_dead(t_parameters *data);
 void					go_sleep(t_parameters *data, t_philo *philosopher);
 void					go_eat(t_parameters *data, t_philo *philosopher);
 void					go_think(t_parameters *data, t_philo *philosopher);
@@ -125,5 +126,6 @@ int						ft_atoi(const char *nptr);
 int						ft_isdigit(int c);
 t_philo					*find_last_philo(t_philo *philo);
 void					clear_philo_list(t_philo **philo);
+int						are_you_dead(t_parameters *data);
 
 #endif
