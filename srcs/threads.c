@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:49:58 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 12:09:07 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 09:15:55 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	join_monitor(pthread_t *monitor, t_parameters *parameters)
 		clean_everything(parameters);
 		return ;
 	}
-	free(monitor);
 }
 
 void	create_threads(t_parameters *parameters, int threads_created,
@@ -71,6 +70,7 @@ void	thread_driver(t_parameters *parameters, pthread_t *thread,
 		parameters);
 	join_monitor(monitor, parameters);
 	free(thread);
+	free(monitor);
 }
 
 int	run_simulation(t_parameters *parameters)

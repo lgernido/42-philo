@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 13:46:39 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 08:58:29 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ typedef struct s_philo
 	int					*dead;
 	pthread_mutex_t		left_fork;
 	pthread_mutex_t		right_fork;
-	pthread_mutex_t		*dead_lock;
-	pthread_mutex_t		*meal_lock;
-	pthread_mutex_t		*print_lock;
 	struct s_philo		*next;
 	struct s_philo		*prev;
 	struct s_parameters	*parameters;

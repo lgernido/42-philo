@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 13:29:11 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 09:09:54 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	are_you_dead(t_philo *philo)
 {
-	pthread_mutex_lock(philo->dead_lock);
+	pthread_mutex_lock(&philo->parameters->dead_lock);
 	if (*philo->dead == 1)
 	{
-		return (pthread_mutex_unlock(philo->dead_lock), 1);
+		return (pthread_mutex_unlock(&philo->parameters->dead_lock), 1);
 	}
-	pthread_mutex_unlock(philo->dead_lock);
+	pthread_mutex_unlock(&philo->parameters->dead_lock);
 	return (0);
 }
 
@@ -43,10 +43,10 @@ void	go_eat(t_parameters *data, t_philo *philosopher)
 	display_message("has taken a fork", philosopher, data);
 	philosopher->currently_eating = 1;
 	display_message("is eating", philosopher, data);
-	pthread_mutex_lock(philosopher->meal_lock);
+	pthread_mutex_lock(&data->meal_lock);
 	philosopher->last_meal_time = 0;
 	philosopher->meal_ate++;
-	pthread_mutex_unlock(philosopher->meal_lock);
+	pthread_mutex_unlock(&data->meal_lock);
 	ft_usleep(data->time_to_eat);
 	philosopher->currently_eating = 0;
 	pthread_mutex_unlock(&philosopher->left_fork);

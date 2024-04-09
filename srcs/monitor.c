@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/08 15:01:41 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 09:18:13 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,28 @@ void	display_message(char *str, t_philo *philo, t_parameters *data)
 {
 	long	current_time;
 
-	pthread_mutex_lock(philo->print_lock);
+	pthread_mutex_lock(&data->print_lock);
 	current_time = get_time() - data->simulation_start;
 	if (!are_you_dead(philo))
 		printf("%ld %d %s\n", current_time, philo->position, str);
-	pthread_mutex_unlock(philo->print_lock);
+	pthread_mutex_unlock(&data->print_lock);
 }
 
 int	reaper_check(t_parameters *data, t_philo *philo)
 {
 	long	current_time;
 
-	pthread_mutex_lock(philo->meal_lock);
+	pthread_mutex_lock(&data->meal_lock);
 	current_time = get_time();
 	if ((current_time - philo->last_meal_time) >= data->time_to_die
 		&& philo->currently_eating == 0)
 	{
-		pthread_mutex_unlock(philo->meal_lock);
+		pthread_mutex_unlock(&data->meal_lock);
 		return (1);
 	}
 	else
 	{
-		pthread_mutex_unlock(philo->meal_lock);
+		pthread_mutex_unlock(&data->meal_lock);
 		return (0);
 	}
 }
@@ -47,18 +47,19 @@ int	reaper_loop(t_philo *philo)
 	int				index;
 	t_parameters	*data;
 
-	data = philo[0].parameters;
+	data = philo->parameters;
 	index = 0;
 	while (index < data->number_of_philosophers)
 	{
-		if (reaper_check(data, &philo[index]) == 1)
+		if (reaper_check(data, philo) == 1)
 		{
-			display_message("has died", &philo[index], data);
-			pthread_mutex_lock(philo[0].dead_lock);
+			display_message("has died", philo, data);
+			pthread_mutex_lock(&data->dead_lock);
 			*philo->dead = 1;
-			pthread_mutex_unlock(philo[0].dead_lock);
+			pthread_mutex_unlock(&data->dead_lock);
 			return (1);
 		}
+		philo = philo->next;
 		index++;
 	}
 	return (0);
@@ -75,17 +76,17 @@ int	did_you_eat(t_philo *philo, t_parameters *data)
 		return (0);
 	while (index < data->number_of_philosophers)
 	{
-		pthread_mutex_lock(philo[index].meal_lock);
+		pthread_mutex_lock(&data->meal_lock);
 		if (philo[index].meal_ate >= data->number_of_times_philosopher_must_eat)
 			done_eating++;
-		pthread_mutex_unlock(philo[index].meal_lock);
+		pthread_mutex_unlock(&data->meal_lock);
 		index++;
 	}
 	if (done_eating == data->number_of_philosophers)
 	{
-		pthread_mutex_lock(philo[0].dead_lock);
+		pthread_mutex_lock(&data->dead_lock);
 		*philo->dead = 1;
-		pthread_mutex_unlock(philo[0].dead_lock);
+		pthread_mutex_unlock(&data->dead_lock);
 		return (1);
 	}
 	return (0);
