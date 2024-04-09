@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 08:42:48 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 09:34:20 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	clean_everything(t_parameters *parameters)
 	(void)parameters;
 	if (parameters->philo)
 		clear_philo_list(&parameters->philo);
+	pthread_mutex_destroy(&parameters->meal_lock);
+	pthread_mutex_destroy(&parameters->dead_lock);
+	pthread_mutex_destroy(&parameters->print_lock);
 	free(parameters);
 }
 
@@ -70,6 +73,7 @@ int	main(int argc, char **argv)
 			philo_seated++;
 		}
 		run_simulation(parameters);
+		clean_everything(parameters);
 		return (0);
 	}
 	else

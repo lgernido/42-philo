@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:33:42 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 09:09:54 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 09:42:27 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ void	go_eat(t_parameters *data, t_philo *philosopher)
 	}
 	pthread_mutex_lock(&philosopher->left_fork);
 	display_message("has taken a fork", philosopher, data);
+	pthread_mutex_lock(&data->meal_lock);
 	philosopher->currently_eating = 1;
 	display_message("is eating", philosopher, data);
-	pthread_mutex_lock(&data->meal_lock);
 	philosopher->last_meal_time = 0;
 	philosopher->meal_ate++;
 	pthread_mutex_unlock(&data->meal_lock);
 	ft_usleep(data->time_to_eat);
+	pthread_mutex_lock(&data->meal_lock);
 	philosopher->currently_eating = 0;
+	pthread_mutex_unlock(&data->meal_lock);
 	pthread_mutex_unlock(&philosopher->left_fork);
 	pthread_mutex_unlock(&philosopher->right_fork);
 }

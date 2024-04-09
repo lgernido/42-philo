@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 09:18:13 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/09 09:19:47 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	did_you_eat(t_philo *philo, t_parameters *data)
 		if (philo[index].meal_ate >= data->number_of_times_philosopher_must_eat)
 			done_eating++;
 		pthread_mutex_unlock(&data->meal_lock);
+		philo = philo->next;
 		index++;
 	}
 	if (done_eating == data->number_of_philosophers)
