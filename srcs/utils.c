@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:29:17 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 14:56:42 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:54:02 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,4 @@ void	clear_philo_list(t_philo **philo)
 		}
 	}
 	*philo = NULL;
-}
-
-int	are_you_dead(t_parameters *data)
-{
-	pthread_mutex_lock(&data->dead_lock);
-	if (data->someone_is_dead == 1)
-	{
-		return (pthread_mutex_unlock(&data->dead_lock), 1);
-	}
-	pthread_mutex_unlock(&data->dead_lock);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 15:30:55 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:53:25 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ typedef struct s_philo
 
 // main.c
 int						main(int argc, char **argv);
-void					syntax_guide(void);
 void					clean_everything(t_parameters *parameters);
 long					get_time(void);
 int						ft_usleep(long milliseconds);
+int						are_you_dead(t_parameters *data);
 
 // init.c
 int						init_parameters(int argc, char **argv,
@@ -127,6 +127,5 @@ int						ft_atoi(const char *nptr);
 int						ft_isdigit(int c);
 t_philo					*find_last_philo(t_philo *philo);
 void					clear_philo_list(t_philo **philo);
-int						are_you_dead(t_parameters *data);
 
 #endif

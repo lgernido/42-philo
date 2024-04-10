@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 15:30:24 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:53:37 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ long	get_time(void)
 	return (time);
 }
 
+int	are_you_dead(t_parameters *data)
+{
+	pthread_mutex_lock(&data->dead_lock);
+	if (data->someone_is_dead == 1)
+	{
+		return (pthread_mutex_unlock(&data->dead_lock), 1);
+	}
+	pthread_mutex_unlock(&data->dead_lock);
+	return (0);
+}
+
 void	clean_everything(t_parameters *parameters)
 {
 	(void)parameters;
@@ -42,20 +53,6 @@ void	clean_everything(t_parameters *parameters)
 	pthread_mutex_destroy(&parameters->dead_lock);
 	pthread_mutex_destroy(&parameters->print_lock);
 	free(parameters);
-}
-
-void	syntax_guide(void)
-{
-	printf("\nSyntax error\n");
-	printf("----------------------------------------------------------------");
-	printf("------------------------------------------------------------\n");
-	printf("./philo [number_of_philosphers] [time_to_die] [time_to_eat] ");
-	printf("[time_to_sleep] (number_of_times_each_philosophers_must_eat)\n\n");
-	printf("All the time arguments are in milliseconds\n");
-	printf("All time arguments must be positive\n");
-	printf("Last argument is optionnal\n");
-	printf("-----------------------------------------------------------------");
-	printf("-----------------------------------------------------------\n");
 }
 
 int	main(int argc, char **argv)
@@ -80,7 +77,7 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		syntax_guide();
+		printf("Syntax error\n");
 		return (1);
 	}
 }

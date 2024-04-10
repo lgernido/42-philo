@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:48:46 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/09 15:47:27 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:54:20 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,20 @@ int	check_digits(char **argv)
 	}
 	return (0);
 }
+
 int	check_input(t_parameters *parameters)
 {
 	if (parameters->number_of_philosophers <= 0 || parameters->time_to_die <= 0
-		|| parameters->time_to_die <= 0 || parameters->time_to_die <= 0)
+		|| parameters->time_to_eat <= 0 || parameters->time_to_sleep <= 0
+		|| parameters->number_of_times_philosopher_must_eat < -1)
 	{
 		return (1);
 	}
-	else if (parameters->number_of_philosophers > INT_MAX
-		|| parameters->time_to_die > INT_MAX
-		|| parameters->time_to_die > INT_MAX
-		|| parameters->time_to_die > INT_MAX)
+	else if (parameters->number_of_philosophers >= INT_MAX
+		|| parameters->time_to_die >= INT_MAX
+		|| parameters->time_to_sleep >= INT_MAX
+		|| parameters->time_to_eat >= INT_MAX
+		|| parameters->number_of_times_philosopher_must_eat >= INT_MAX)
 	{
 		return (1);
 	}
