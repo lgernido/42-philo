@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 12:10:00 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/10 08:53:37 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:36:56 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	main(int argc, char **argv)
 
 	philo_seated = 0;
 	parameters = malloc(sizeof(*parameters));
+	if (!parameters)
+		return (1);
 	if (argc >= 5 && argc <= 6 && init_parameters(argc, argv, parameters) == 0
 		&& check_input(parameters) == 0)
 	{

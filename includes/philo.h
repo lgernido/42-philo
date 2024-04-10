@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:56:29 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/10 08:53:25 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:25:20 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,7 @@
 # define WHT "\x1B[37m"
 
 //==========================================================================//
-/*STRUCTURES AND ENUMS*/
-
-typedef enum e_bool
-{
-	FALSE = 1,
-	TRUE = 0
-}						t_bool;
+/*STRUCTURES*/
 
 typedef struct s_parameters
 {

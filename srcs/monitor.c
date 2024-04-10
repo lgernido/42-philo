@@ -6,7 +6,7 @@
 /*   By: lgernido <lgernido@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 08:49:34 by lgernido          #+#    #+#             */
-/*   Updated: 2024/04/10 09:37:35 by lgernido         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:01:37 by lgernido         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	*monitor_routine(void *arg)
 		{
 			break ;
 		}
-		usleep(500);
+		usleep(1000);
 	}
 	return (NULL);
 }
